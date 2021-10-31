@@ -1,16 +1,20 @@
-import { GITHUB_REQUEST, GITHUB_ERROR, GITHUB_SUCCESS } from './constants';
+import { GitHubActionsTypes } from '../types/types';
+import { GitHubActionsType, InitialReducerState } from '../types/interfaces';
 
-const initialState: any = {
+const initialState: InitialReducerState = {
   commits: [],
+  error: {},
 };
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: GitHubActionsType) => {
   console.log('reducer ', action);
   switch (action.type) {
-    case GITHUB_REQUEST:
+    case GitHubActionsTypes.GITHUB_REQUEST:
       return state;
-    case GITHUB_SUCCESS:
+    case GitHubActionsTypes.GITHUB_SUCCESS:
       return { ...state, commits: action.payload };
+    case GitHubActionsTypes.GITHUB_ERROR:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

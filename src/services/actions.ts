@@ -1,16 +1,15 @@
-import { GITHUB_REQUEST, GITHUB_ERROR, GITHUB_SUCCESS } from './constants';
+import { GitHubActionsTypes } from '../types/types';
 
 export const gitHubRequest = () => ({
-  type: GITHUB_REQUEST,
-  //   payload: data,
+  type: GitHubActionsTypes.GITHUB_REQUEST,
 });
 
 export const gitHubSuccess = (data: Array<any>) => ({
-  type: GITHUB_SUCCESS,
+  type: GitHubActionsTypes.GITHUB_SUCCESS,
   payload: data,
 });
 
-export const gitHubError = (data: Array<any>) => ({
-  type: GITHUB_ERROR,
-  payload: data,
+export const gitHubError = (error: Record<any, any>) => ({
+  type: GitHubActionsTypes.GITHUB_ERROR,
+  payload: error,
 });

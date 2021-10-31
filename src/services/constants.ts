@@ -1,3 +1,0 @@
-export const GITHUB_REQUEST = 'GITHUB_REQUEST';
-export const GITHUB_SUCCESS = 'GITHUB_SUCCESS';
-export const GITHUB_ERROR = 'GITHUB_ERROR';
