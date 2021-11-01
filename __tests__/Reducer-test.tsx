@@ -26,9 +26,15 @@ const mockData = [
   },
 ];
 
+const mockPayload: any = { userText: 'jcaru614', repoText: 'my_portfolio' };
 describe('Reducer Test', () => {
   test('Should return the initial state', async () => {
-    expect(reducer(undefined, { type: GitHubActionsTypes.GITHUB_REQUEST })).toEqual({
+    expect(
+      reducer(undefined, {
+        type: GitHubActionsTypes.GITHUB_REQUEST,
+        payload: mockPayload,
+      })
+    ).toEqual({
       commits: [],
       error: {},
       spinner: false,

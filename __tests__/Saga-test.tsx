@@ -2,6 +2,7 @@ import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import { getCommitsFromAPI } from '../src/services/saga';
 import { requestCommits } from '../src/services/requests';
 import { gitHubSpinner, gitHubSuccess } from '../src/services/actions';
+import { GitHubActionsTypes } from '../src/types/types';
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 const mockData = [
@@ -29,6 +30,11 @@ const mockData = [
   },
 ];
 
+const mockPayload: any = {
+  type: GitHubActionsTypes.GITHUB_REQUEST,
+  payload: { userText: 'jcaru614', repoText: 'my_portfolio' },
+};
+
 describe('Saga Test', () => {
   test('Saga spinner is tested', async () => {
     return expectSaga(getCommitsFromAPI, requestCommits)
@@ -39,14 +45,14 @@ describe('Saga Test', () => {
   });
 
   test('Saga calls the requested api', async () => {
-    return testSaga(getCommitsFromAPI, requestCommits).next().next().call(requestCommits);
+    return testSaga(getCommitsFromAPI, mockPayload).next().next().call(requestCommits, mockPayload);
   });
 
   test('Saga success is tested', async () => {
-    return testSaga(getCommitsFromAPI, requestCommits)
+    return testSaga(getCommitsFromAPI, mockPayload)
       .next()
       .next()
-      .call(requestCommits)
+      .call(requestCommits, mockPayload)
       .next(mockData)
       .put(gitHubSuccess(mockData));
   });

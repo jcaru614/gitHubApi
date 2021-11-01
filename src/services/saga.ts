@@ -7,10 +7,10 @@ function* getCommits() {
   yield takeLatest(GitHubActionsTypes.GITHUB_REQUEST, getCommitsFromAPI);
 }
 
-export function* getCommitsFromAPI(action: any): any {
+export function* getCommitsFromAPI(action: Record<any, any>): any {
   yield put(gitHubSpinner(true));
   try {
-    const data: any = yield call(requestCommits as any);
+    const data: any = yield call(requestCommits as any, action);
     yield put(gitHubSuccess(data));
   } catch (e: any) {
     yield put(gitHubError(e));

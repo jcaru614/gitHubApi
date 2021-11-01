@@ -3,6 +3,7 @@ import { GitHubActionsTypes } from './types';
 
 export interface GitHubRequestAction extends Action {
   type: GitHubActionsTypes.GITHUB_REQUEST;
+  payload: Record<any, any>;
 }
 
 export interface GitHubSuccesstAction extends Action {

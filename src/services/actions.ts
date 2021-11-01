@@ -1,7 +1,8 @@
 import { GitHubActionsTypes } from '../types/types';
 
-export const gitHubRequest = () => ({
+export const gitHubRequest = (data: Record<any, any>) => ({
   type: GitHubActionsTypes.GITHUB_REQUEST,
+  payload: data,
 });
 
 export const gitHubSuccess = (data: Array<any>) => ({

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
 import { gitHubRequest } from '../services/actions';
 import Spinner from '../components/Spinner';
 import { styles } from './Main.styles';
 
 const Main = () => {
   const dispatch = useDispatch();
+  const [userText, setUserText] = useState('');
+  const [repoText, setRepoText] = useState('');
   const gitHubCommits = useSelector((state: RootStateOrAny) => state.reducer.commits);
   const spinner = useSelector((state: RootStateOrAny) => state.reducer.spinner);
+
   const getData = () => {
-    dispatch(gitHubRequest());
+    dispatch(gitHubRequest({ userText, repoText }));
   };
 
   return (
@@ -19,6 +22,20 @@ const Main = () => {
       <TouchableOpacity style={styles.button} onPress={getData} testID="btn">
         <Text style={styles.btnText}>Get Commits</Text>
       </TouchableOpacity>
+      <View style={styles.flex}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="user name"
+          onChangeText={(text) => setUserText(text)}
+          value={userText}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="repo"
+          onChangeText={(text) => setRepoText(text)}
+          value={repoText}
+        />
+      </View>
       <View style={styles.subContainer}>
         <View>{spinner ? <Spinner /> : null}</View>
         <ScrollView>
