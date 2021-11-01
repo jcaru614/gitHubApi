@@ -1,13 +1,14 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { requestCommits } from './requests';
-import { gitHubError, gitHubSuccess } from './actions';
+import { gitHubError, gitHubSuccess, gitHubSpinner } from './actions';
 import { GitHubActionsTypes } from '../types/types';
 
 function* getCommits() {
   yield takeLatest(GitHubActionsTypes.GITHUB_REQUEST, getCommitsFromAPI);
 }
 
-function* getCommitsFromAPI(action: any): any {
+export function* getCommitsFromAPI(action: any): any {
+  yield put(gitHubSpinner(true));
   try {
     const data: any = yield call(requestCommits as any);
     yield put(gitHubSuccess(data));

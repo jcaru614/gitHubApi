@@ -12,12 +12,22 @@ export interface GitHubSuccesstAction extends Action {
 
 export interface GitHubErrorAction extends Action {
   type: GitHubActionsTypes.GITHUB_ERROR;
-  payload: Array<any>;
+  payload: Record<any, any>;
 }
 
-export type GitHubActionsType = GitHubRequestAction | GitHubErrorAction | GitHubSuccesstAction;
+export interface GitHubSpinnerAction extends Action {
+  type: GitHubActionsTypes.GITHUB_SPINNER;
+  payload: boolean;
+}
+
+export type GitHubActionsType =
+  | GitHubRequestAction
+  | GitHubErrorAction
+  | GitHubSuccesstAction
+  | GitHubSpinnerAction;
 
 export interface InitialReducerState {
   commits: Array<any>;
   error: Record<any, any>;
+  spinner: boolean;
 }

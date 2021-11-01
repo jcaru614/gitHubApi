@@ -13,3 +13,8 @@ export const gitHubError = (error: Record<any, any>) => ({
   type: GitHubActionsTypes.GITHUB_ERROR,
   payload: error,
 });
+
+export const gitHubSpinner = (spinner: boolean) => ({
+  type: GitHubActionsTypes.GITHUB_SPINNER,
+  payload: spinner,
+});
