@@ -16,7 +16,7 @@ const reducer = (state = initialState, action: GitHubActionsType) => {
     case GitHubActionsTypes.GITHUB_SUCCESS:
       return { ...state, commits: action.payload, spinner: false };
     case GitHubActionsTypes.GITHUB_ERROR:
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, spinner: false };
     default:
       return state;
   }

@@ -1,8 +1,9 @@
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import { getCommitsFromAPI } from '../src/services/saga';
 import { requestCommits } from '../src/services/requests';
-import { gitHubSpinner, gitHubSuccess } from '../src/services/actions';
+import { gitHubError, gitHubSpinner, gitHubSuccess } from '../src/services/actions';
 import { GitHubActionsTypes } from '../src/types/types';
+import moxios from 'moxios';
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 const mockData = [
@@ -29,7 +30,9 @@ const mockData = [
     },
   },
 ];
-
+const errorObject = {
+  error: 'this is an error',
+};
 const mockPayload: any = {
   type: GitHubActionsTypes.GITHUB_REQUEST,
   payload: { userText: 'jcaru614', repoText: 'my_portfolio' },
@@ -56,4 +59,23 @@ describe('Saga Test', () => {
       .next(mockData)
       .put(gitHubSuccess(mockData));
   });
+
+  test('Saga is tested with an error', async () => {
+
+    moxios.wait(function () {
+      let request = moxios.requests.mostRecent()
+      request.respondWith({
+        status: 400,
+        response: errorObject
+      }).then(function () {
+       
+        return testSaga(getCommitsFromAPI, mockPayload)
+        .next()
+        .next()
+        .call(requestCommits, mockPayload)
+        .next(errorObject)
+        .put(gitHubError(errorObject));
+      })
+    })
+  })
 });

@@ -5,7 +5,7 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 describe('Main Test', () => {
   test('Main displays button', async () => {
-    const {  getByText} = render(<Main />);
+    const { getByText } = render(<Main />);
     const button = getByText('Get Commits');
     expect(button).toBeDefined();
   });

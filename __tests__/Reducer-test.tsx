@@ -25,6 +25,9 @@ const mockData = [
     },
   },
 ];
+const errorObject = {
+  error: 'this is an error',
+};
 
 const mockPayload: any = { userText: 'jcaru614', repoText: 'my_portfolio' };
 describe('Reducer Test', () => {
@@ -52,6 +55,22 @@ describe('Reducer Test', () => {
     ).toEqual({
       commits: mockData,
       error: {},
+      spinner: false,
+    });
+  });
+
+  test('Should return the state with error message', async () => {
+    const previousState = {
+      commits: [],
+      error: {},
+      spinner: true,
+    };
+
+    expect(
+      reducer(previousState, { type: GitHubActionsTypes.GITHUB_ERROR, payload: errorObject })
+    ).toEqual({
+      commits: [],
+      error: errorObject,
       spinner: false,
     });
   });
